@@ -38,8 +38,8 @@ func MyHandlerFunc(w http.ResponseWriter, r *http.Request) {
 
     models, err := getModels()
     if err != nil {
-        resp.SetResult(http.StatusInternalServerError, nil)
-            .WithErrorDetails(err.Error())
+        resp.SetResult(http.StatusInternalServerError, nil).
+            WithErrorDetails(err.Error())
         return
     }
 
