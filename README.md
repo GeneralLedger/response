@@ -4,6 +4,12 @@
   <a href="https://goreportcard.com/report/github.com/GeneralLedger/response">
     <img src="https://goreportcard.com/badge/github.com/GeneralLedger/response" alt="Go Report Card"/>
   </a>
+  <a href="https://codecov.io/gh/GeneralLedger/response">
+    <img src="https://codecov.io/gh/GeneralLedger/response/branch/master/graph/badge.svg" alt="Code Coverage" />
+  </a>
+  <a href="https://travis-ci.org/GeneralLedger/response">
+    <img src="https://travis-ci.org/GeneralLedger/response.svg?branch=master" alt="Build Status"/>
+  </a>
 </p>
 
 # Response
