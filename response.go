@@ -17,6 +17,19 @@ type Response struct {
 	Result       interface{} `json:"result"`
 }
 
+// Parse converts a io.ReadCloser (the type of a http.Response.Body)
+// into a Response struct. This is primarily a utility function for
+// API testing purposes.
+func Parse(body io.ReadCloser) Response {
+	defer body.Close()
+	resp := Response{}
+	err := json.NewDecoder(body).Decode(&resp)
+	if err != nil {
+		panic(err)
+	}
+	return resp
+}
+
 // New instantiates a new Response struct prepared with a 500 Status.
 //
 // Internal Server Error is considered a fail-safe to automatically handle

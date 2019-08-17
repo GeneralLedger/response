@@ -46,3 +46,22 @@ func MyHandlerFunc(w http.ResponseWriter, r *http.Request) {
     resp.SetResult(http.StatusOK, models)
 }
 ```
+
+## Testing
+
+```go
+func TestPingSuccess(t *testing.T) {
+    recorder := httptest.NewRecorder()
+    req := httptest.NewRequest(http.MethodGet, "/ping", nil)
+    PingHandlerFunc(recorder, req)
+
+    assert.Equal(t,
+        response.Response{
+            StatusCode: 200,
+            StatusText: "OK",
+            Result:     "pong",
+        },
+        response.Parse(recorder.Result().Body),
+    )
+}
+```
