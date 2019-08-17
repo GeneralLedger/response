@@ -1,8 +1,10 @@
 package response
 
 import (
+	"bytes"
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 	"net/http"
 	"testing"
 )
@@ -121,4 +123,36 @@ func TestJsonRenderFailure(t *testing.T) {
 	resp.SetResult(http.StatusOK, func() {})
 	resp.Output()
 	t.Error("JsonRenderer should fail and cause a panic with content that can not be serialized to JSON")
+}
+
+// TestParseSuccess tests that we can parse a properly formatted
+// io.ReadCloser into a Response struct
+func TestParseSuccess(t *testing.T) {
+	body := ioutil.NopCloser(
+		bytes.NewReader([]byte(
+			`{"status_code":200,"status_text":"OK","error_details":null,"result":"pong"}`,
+		)),
+	)
+	result := Parse(body)
+	assert.Equal(t, Response{
+		StatusCode:   200,
+		StatusText:   "OK",
+		ErrorDetails: nil,
+		Result:       "pong",
+	}, result)
+}
+
+// TestParseFailure tests that a panic is properly thrown
+// when we try to Parse a io.ReadCloser is improperly formatted
+func TestParseFailure(t *testing.T) {
+	defer func() {
+		recover()
+	}()
+	body := ioutil.NopCloser(
+		bytes.NewReader([]byte(
+			`{"status_code":"hello world"}`,
+		)),
+	)
+	Parse(body)
+	t.Error("Parse should fail and cause a panic with content that can not be converted to a Response")
 }
