@@ -13,7 +13,7 @@ type Response struct {
 	Writer       io.Writer   `json:"-"`
 	StatusCode   int         `json:"status_code"`
 	StatusText   string      `json:"status_text"`
-	ErrorDetails *string     `json:"error_details"`
+	ErrorDetails *[]string   `json:"error_details"`
 	Result       interface{} `json:"result"`
 }
 
@@ -59,7 +59,7 @@ func New(writer io.Writer) *Response {
 //
 //	resp.SetResult(http.StatusBadRequest, nil).
 //		WithErrorDetails("Missing Parameter 'name'")
-func (r *Response) WithErrorDetails(errorDetails string) *Response {
+func (r *Response) WithErrorDetails(errorDetails ...string) *Response {
 	r.ErrorDetails = &errorDetails
 	return r
 }
