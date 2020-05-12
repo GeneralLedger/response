@@ -77,7 +77,7 @@ func TestResponseWithErrorDetails(t *testing.T) {
 	assert.Equal(t, Response{
 		StatusCode:   http.StatusInternalServerError,
 		StatusText:   "Internal Server Error",
-		ErrorDetails: &missingAuth,
+		ErrorDetails: &[]string{missingAuth},
 		Result:       nil,
 	}, *(sw.Peek()))
 }
